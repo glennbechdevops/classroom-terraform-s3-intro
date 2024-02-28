@@ -57,7 +57,7 @@ Replace region and bucket attributes
 
 ```hcl
 provider "aws" {
-  region = "your-region" # Example: us-east-1
+  region = "eu-west-1"
 }
 
 resource "aws_s3_bucket" "my_bucket" {
@@ -67,7 +67,7 @@ resource "aws_s3_bucket" "my_bucket" {
 
 ### Step 2: Initializing and Planning with Terraform
 
-1. Go to ther temrinal window on the bottom of the Cloud 9 environment.
+1. Go to the terminal window on the bottom of the Cloud 9 environment.
 2. Run `terraform init` to initialize the Terraform workspace.
 3. Run `terraform plan` to see the actions Terraform will take based on your configuration.
 
@@ -79,22 +79,47 @@ resource "aws_s3_bucket" "my_bucket" {
 ### Step 4: Testing the Bucket
 
 1. Manually upload a file to the bucket through the AWS Management Console, as described in Part 1, Step 2.
+2. To navigate to the AWS Management Console from Cloud 9, press the Cloud9 Icon in the upper left corner and press "Go to your Dashboard"
 
-### Step 5: Enabling Encryption with Terraform
+![](img/c9.png)
+ 
+### Step 5: Add some tags to your bucket 
+In AWS all resources can have Tags, key value pairs that can make it easier to find and categorise resources
 
 1. Modify the `s3_bucket.tf` file to enable server-side encryption by adding the following block inside the `aws_s3_bucket` resource:
 
 ```hcl
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
+  tags = {
+    Environment = "Dev"
   }
 ```
 
-2. Run `terraform plan` and `terraform apply` to apply the encryption settings.
+2. Run `terraform plan` and `terraform apply` to add the tags 
+
+Observe that during the plan phase, Terraform wil output the changes needed to reach 
+the desired state. The ~ sign means that a resource will change, a +/- means that a 
+resource will be replaced. a + means that a resource will be removed, and a + that a resource 
+will be created.
+
+```shell
+Terraform will perform the following actions:
+
+  # aws_s3_bucket.my_bucket will be updated in-place
+  ~ resource "aws_s3_bucket" "my_bucket" {
+        id                          = "glennbech-demo-bucket"
+      ~ tags                        = {
+          + "Environment" = "Dev"
+        }
+      ~ tags_all                    = {
+          + "Environment" = "Dev"
+        }
+        # (10 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+```
 
 ### Step 6: Emptying the Bucket Using the CLI
 
