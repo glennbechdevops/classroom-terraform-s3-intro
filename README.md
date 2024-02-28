@@ -77,9 +77,8 @@ resource "aws_s3_bucket" "my_bucket" {
 2. Run `terraform plan` again, and see that there is no change 
 
 ### Step 4: Testing the Bucket
-
-1. Manually upload a file to the bucket through the AWS Management Console, as described in Part 1, Step 2.
-2. To navigate to the AWS Management Console from Cloud 9, press the Cloud9 Icon in the upper left corner and press "Go to your Dashboard"
+1. To navigate to the AWS Management Console from Cloud 9, press the Cloud9 Icon in the upper left corner and press "Go to your Dashboard"
+2. Manually upload a file to the bucket through the AWS Management Console, as described in Part 1, Step 2.
 
 ![](img/c9.png)
  
