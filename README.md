@@ -18,7 +18,7 @@ enabling encryption.
 
 ### Step 2: Uploading a File to the Bucket
 
-1. After creating your bucket, click on its name to open it.
+1. After creating your bucket, click on its name to open it. Or Press the "View details" in he green confirmation bar on the top of the screen.
 2. Click on **Upload**.
 3. Click on **Add files**, and select a file from your computer to upload.
 4. After adding the file, click on **Upload** at the bottom of the page.
@@ -29,15 +29,31 @@ enabling encryption.
 2. Select the bucket you created by clicking the checkbox next to its name.
 3. Click on **Delete**.
 4. Take not of the warning "This bucket is not empty", click the "Empty bucket" 
-5. You will be asked to confirm the bucket deletion by entering its name. Do so, then click **Confirm**.
+5. You will be asked to confirm the bucket deletion by entering its name. Or "Permanently delete". Do so, then click **Confirm**.
 
 ## Part 2: Automating with Terraform
 
-You will do this part in your Cloud9 environment.
+* You will do this part in your Cloud9 environment. From the AWS menu, find the "Services" Icon, and find Cloud 9
+* You will see an environment with your seat number on it. Clik the "open" link
+
+Spend a few moments to familirise yourself with Cloud9, a capable web based IDE. 
+
+### Step 0: Install terrafomr 
+
+Unfortunately Cloud9 no longer comes with Terraform installed, so we have to install it 
+
+```bash
+wget https://releases.hashicorp.com/terraform/1.6.4/terraform_1.6.4_linux_amd64.zip
+unzip terraform_1.6.4_linux_amd64.zip
+sudo mv terraform /usr/local/bin/
+```
 
 ### Step 1: Writing Terraform Code for the S3 Bucket
 
-Create a new Terraform configuration file (`s3_bucket.tf`) with the following content:
+Instead of creating a bucket manually, we'll now see how we can do the same from Terraform. 
+Create a new Terraform  file (`s3_bucket.tf`) in your Cloud 9 editor with the following content:
+
+Replace region and bucket attributes
 
 ```hcl
 provider "aws" {
@@ -46,13 +62,12 @@ provider "aws" {
 
 resource "aws_s3_bucket" "my_bucket" {
   bucket = "your-unique-bucket-name"
-  acl    = "private"
 }
 ```
 
 ### Step 2: Initializing and Planning with Terraform
 
-1. Open a terminal and navigate to the directory containing your Terraform configuration file.
+1. Go to ther temrinal window on the bottom of the Cloud 9 environment.
 2. Run `terraform init` to initialize the Terraform workspace.
 3. Run `terraform plan` to see the actions Terraform will take based on your configuration.
 
