@@ -53,8 +53,6 @@ sudo mv terraform /usr/local/bin/
 Instead of creating a bucket manually, we'll now see how we can do the same from Terraform. 
 Create a new Terraform  file (`s3_bucket.tf`) in your Cloud 9 editor with the following content:
 
-Replace region and bucket attributes
-
 ```hcl
 provider "aws" {
   region = "eu-west-1"
