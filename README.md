@@ -82,7 +82,8 @@ resource "aws_s3_bucket" "my_bucket" {
 
 ![](img/c9.png)
  
-### Step 5: Add some tags to your bucket 
+### Step 5: Do changes to the bucket 
+
 In AWS all resources can have Tags, key value pairs that can make it easier to find and categorise resources
 
 1. Modify the `s3_bucket.tf` file to enable server-side encryption by adding the following block inside the `aws_s3_bucket` resource:
@@ -91,6 +92,37 @@ In AWS all resources can have Tags, key value pairs that can make it easier to f
   tags = {
     Environment = "Dev"
   }
+```
+
+You can also add this resource to get autmatic deletion and transitions to colder storage over time 
+
+```hcl
+resource "aws_s3_bucket_lifecycle_configuration" "my_bucket_lifecycle" {
+  bucket = aws_s3_bucket.my_bucket.id
+
+  rule {
+    id     = "my-lifecycle-rule"
+    status = "Enabled"
+
+    transition {
+      days          = 30
+      storage_class = "STANDARD_IA"
+    }
+
+    expiration {
+      days = 365
+    }
+
+    noncurrent_version_transition {
+      noncurrent_days = 30
+      storage_class   = "STANDARD_IA"
+    }
+
+    noncurrent_version_expiration {
+      noncurrent_days = 365
+    }
+  }
+}
 ```
 
 2. Run `terraform plan` and `terraform apply` to add the tags 
