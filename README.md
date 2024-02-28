@@ -130,26 +130,6 @@ the desired state. The ~ sign means that a resource will change, a +/- means tha
 resource will be replaced. a + means that a resource will be removed, and a + that a resource 
 will be created.
 
-```shell
-Terraform will perform the following actions:
-
-  # aws_s3_bucket.my_bucket will be updated in-place
-  ~ resource "aws_s3_bucket" "my_bucket" {
-        id                          = "glennbech-demo-bucket"
-      ~ tags                        = {
-          + "Environment" = "Dev"
-        }
-      ~ tags_all                    = {
-          + "Environment" = "Dev"
-        }
-        # (10 unchanged attributes hidden)
-
-        # (3 unchanged blocks hidden)
-    }
-
-Plan: 0 to add, 1 to change, 0 to destroy.
-```
-
 ### Step 6: Emptying the Bucket Using the CLI
 
 1. Use the AWS CLI to empty the bucket:
