@@ -38,7 +38,7 @@ enabling encryption.
 
 Spend a few moments to familirise yourself with Cloud9, a capable web based IDE. 
 
-### Step 0: Install terrafomr 
+### Step 0: Install terraform 
 
 Unfortunately Cloud9 no longer comes with Terraform installed, so we have to install it 
 
