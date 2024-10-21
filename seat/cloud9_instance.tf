@@ -3,6 +3,7 @@ data "aws_vpc" "main" {
 }
 
 resource "aws_ecr_repository" "myrepo" {
+  force_delete = true
   name = "${var.student_id}-private"
 }
 
