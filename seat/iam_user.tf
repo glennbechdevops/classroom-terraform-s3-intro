@@ -44,7 +44,7 @@ resource "aws_iam_user_policy" "student_policy" {
         "s3:*",
         "ec2:*",
         "bedrock:*",
-        "sqs:*",
+        "sqs:*"
       ],
       "Effect": "Allow",
       "Resource": "*"
