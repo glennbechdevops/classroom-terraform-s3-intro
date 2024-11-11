@@ -42,7 +42,9 @@ resource "aws_iam_user_policy" "student_policy" {
         "codedeploy:*",
         "cloudformation:*",
         "s3:*",
-        "ec2:*"
+        "ec2:*",
+        "bedrock:*",
+        "sqs:*",
       ],
       "Effect": "Allow",
       "Resource": "*"
