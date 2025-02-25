@@ -75,6 +75,7 @@ resource "aws_s3_bucket" "my_bucket" {
 2. Run `terraform plan` again, and see that there is no change 
 
 ### Step 4: Testing the Bucket
+
 1. To navigate to the AWS Management Console from Cloud 9, press the Cloud9 Icon in the upper left corner and press "Go to your Dashboard"
 2. Manually upload a file to the bucket through the AWS Management Console, as described in Part 1, Step 2.
 
@@ -82,14 +83,19 @@ resource "aws_s3_bucket" "my_bucket" {
  
 ### Step 5: Do changes to the bucket 
 
-In AWS all resources can have Tags, key value pairs that can make it easier to find and categorise resources
 
-1. Modify the `s3_bucket.tf` file to enable server-side encryption by adding the following block inside the `aws_s3_bucket` resource:
+1. Modify the `s3_bucket.tf` file to enable server-side encryption by adding the following resource to your terraform code
 
 ```hcl
-  tags = {
-    Environment = "Dev"
+resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_encryption" {
+  bucket = aws_s3_bucket.my_bucket.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
   }
+}
 ```
 
 You can also add this resource to get autmatic deletion and transitions to colder storage over time 
@@ -123,7 +129,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "my_bucket_lifecycle" {
 }
 ```
 
-2. Run `terraform plan` and `terraform apply` to add the tags 
+2. Run `terraform plan` and `terraform apply` to do the changes
+
+TIP: Try running terraform apply with the --auto-approve flag to apply the changes without prompting you for confirmation.
 
 Observe that during the plan phase, Terraform wil output the changes needed to reach 
 the desired state. The ~ sign means that a resource will change, a +/- means that a 
@@ -132,10 +140,12 @@ will be created.
 
 ### Step 6: Emptying the Bucket Using the CLI
 
+This demonstrates how to empty the bucket using the AWS CLI, instead of the AWS Management Console.
+
 1. Use the AWS CLI to empty the bucket:
 
 ```sh
-aws s3 rm s3://your-unique-bucket-name --recursive
+aws s3 rm s3://<your-unique-bucket-name --recursive
 ```
 
 ### Step 7: Destroying the Bucket with Terraform
